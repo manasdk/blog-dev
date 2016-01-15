@@ -1,0 +1,22 @@
+---
+  name: on_app_response_check
+  description: Sample rule that dogfoods st2.
+  pack: app_remediation
+  trigger:
+    type: sensu.event_handler
+  criteria:
+    trigger.check.name:
+      pattern: "app_response_check"
+      type: "equals"
+    trigger.check.output:
+      pattern: "CheckHTTP CRITICAL*"
+      type: "matchregex"
+    trigger.check.status:
+      pattern: 2
+      type: equals
+  action:
+    ref: "app_remediation.remediate"
+    parameters:
+      app_server_host: "127.0.0.1"
+      app_server_port: "9999"
+  enabled: true

@@ -1,0 +1,18 @@
+---
+    chain:
+        -
+            name: "remediate"
+            ref: "core.http"
+            parameters:
+                url: "http://{{app_server_host}}:{{app_server_port}}/good"
+                method: POST
+            on-success: "validate"
+        -
+            name: "validate"
+            ref: "core.local"
+            ref: "core.http"
+            parameters:
+                url: "http://{{app_server_host}}:{{app_server_port}}/square/11"
+                method: POST
+                timeout: 5
+    default: "remediate"

@@ -1,0 +1,23 @@
+---
+name: remediate
+pack: app_remediation
+description: Restore application performance
+runner_type: action-chain
+entry_point: workflows/remediate.yaml
+enabled: true
+parameters:
+  app_server_host:
+    type: string
+    default: "127.0.0.1"
+  app_server_port:
+    type: string
+    default: "9999"
+notify:
+  on-success:
+    message: "\"@channel: Application performance restored.\""
+    routes:
+      - "slack"
+  on-failure:
+    message: "\"@channel: Unable to restore application performance.\""
+    routes:
+      - "slack"
